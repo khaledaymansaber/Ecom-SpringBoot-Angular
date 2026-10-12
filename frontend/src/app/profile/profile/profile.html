@@ -1,0 +1,81 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1"><i class="fa fa-user-circle text-primary me-2"></i> My Account & Profile</h3>
+      <p class="text-muted mb-0">Manage your personal information and default shipping address</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2 text-muted">Loading profile details...</p>
+  </div>
+
+  <div class="row g-4" *ngIf="!loading">
+    <!-- User Personal Details -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="mb-0 fw-bold"><i class="fa fa-id-card-o text-primary me-2"></i> Personal Details</h5>
+        </div>
+        <div class="card-body p-4" [formGroup]="profileForm">
+          <div class="mb-3">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control bg-light" formControlName="email" />
+            <small class="text-muted">Email address cannot be changed.</small>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Display Name *</label>
+            <input type="text" class="form-control" formControlName="displayName" placeholder="Your full name" />
+            <div class="text-danger small" *ngIf="profileForm.get('displayName')?.invalid && profileForm.get('displayName')?.touched">
+              Display name is required.
+            </div>
+          </div>
+          <button class="btn btn-primary" (click)="saveProfile()" [disabled]="profileForm.invalid">
+            <i class="fa fa-save me-1"></i> Update Display Name
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Default Shipping Address -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="mb-0 fw-bold"><i class="fa fa-home text-success me-2"></i> Default Shipping Address</h5>
+        </div>
+        <div class="card-body p-4" [formGroup]="addressForm">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">First Name *</label>
+              <input type="text" class="form-control" formControlName="firstName" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last Name *</label>
+              <input type="text" class="form-control" formControlName="lastName" />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Street Address *</label>
+              <input type="text" class="form-control" formControlName="street" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">City *</label>
+              <input type="text" class="form-control" formControlName="city" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">State *</label>
+              <input type="text" class="form-control" formControlName="state" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Zip Code *</label>
+              <input type="text" class="form-control" formControlName="zipCode" />
+            </div>
+          </div>
+          <button class="btn btn-success mt-4" (click)="saveAddress()" [disabled]="addressForm.invalid">
+            <i class="fa fa-map-marker me-1"></i> Save Default Address
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

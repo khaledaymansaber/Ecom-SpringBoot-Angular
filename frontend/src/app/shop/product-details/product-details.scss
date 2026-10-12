@@ -1,0 +1,61 @@
+.main-img {
+    text-align: center;
+}
+::ng-deep .ngxImageZoomContainer > img {
+  max-height: 300px;
+}
+.previews img {
+    border: 2px solid #ddd;
+    padding: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.previews img:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.product-title {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.price-area {
+    font-size: 1.2rem;
+}
+
+.old-price-discount {
+    font-size: 0.9rem;
+    margin-left: 10px;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons .block {
+    margin-right: 10px;
+}
+
+.buttons .custom-btn {
+    background-color: #ff6347;
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.buttons .custom-btn:hover {
+    background-color: #e5533d;
+}
+
+.quantity input {
+    width: 70px;
+}
+.details-title{
+  font-size: 1.3rem;
+  color:#ff6347;
+}

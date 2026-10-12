@@ -1,0 +1,25 @@
+<div class="border rounded bg-light p-3 shadow-sm">
+  <div class="order-summary bg-info text-white text-uppercase p-2 text-center rounded mb-3">
+    Order Summary
+  </div>
+  <div class="order-details">
+    <p class="text-muted small text-center" style="font-style: italic;">Shipping will be added on total price</p>
+
+    @if (basketTotals$ | async; as basketTotals) {
+      <ul class="list-unstyled mb-0 mt-3">
+        <li class="d-flex justify-content-between border-bottom py-2">
+          <strong class="text-muted">Order SubTotal</strong>
+          <strong>{{ basketTotals.subtotal | currency }}</strong>
+        </li>
+        <li class="d-flex justify-content-between border-bottom py-2">
+          <strong class="text-muted">Order shipping</strong>
+          <strong>{{ basketTotals.shipping | currency }}</strong>
+        </li>
+        <li class="d-flex justify-content-between py-2 fs-5 text-primary mt-2">
+          <strong>Order total</strong>
+          <strong>{{ basketTotals.total | currency }}</strong>
+        </li>
+      </ul>
+    }
+  </div>
+</div>

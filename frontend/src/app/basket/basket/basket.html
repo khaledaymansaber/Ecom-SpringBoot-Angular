@@ -1,0 +1,83 @@
+@if (!basket || basket.items.length === 0) {
+  <div class="container my-5 text-center">
+    <div class="py-5 bg-light rounded border shadow-sm">
+      <i class="fa fa-shopping-basket fa-4x text-muted mb-3"></i>
+      <h3 class="fw-bold">Your basket is empty!</h3>
+      <p class="text-muted">Looks like you haven't added any items to your shopping cart yet.</p>
+      <a routerLink="/shop" class="btn btn-primary mt-2">Explore Products</a>
+    </div>
+  </div>
+} @else {
+  <div class="container pt-4 flex-container">
+    <div class="basket-container">
+      <table class="table table-hover custom-table align-middle">
+        <thead>
+          <tr class="bg-primary text-white">
+            <th>Product</th>
+            <th></th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of basket.items; track item.id) {
+            <tr>
+              <td>
+                <a
+                  class="text-dark fw-bold text-decoration-none"
+                  routerLink="/shop/product-details/{{ item.id }}"
+                  >{{ item.name }}</a
+                >
+              </td>
+
+              <td>
+                <img
+                  [src]="
+                    item.image?.startsWith('http')
+                      ? item.image
+                      : 'http://localhost:8080/images/' + item.image
+                  "
+                  class="product-image img-fluid rounded border"
+                  style="width: 60px; height: 60px; object-fit: contain;"
+                  alt="product"
+                />
+              </td>
+              <td class="description small text-muted">{{ item.description }}</td>
+              <td class="fw-semibold">{{ item.price | currency }}</td>
+              <td>
+                <div class="d-flex justify-content-center align-items-center">
+                  <button class="btn btn-sm btn-outline-secondary" (click)="decrementQuantity(item)">
+                    <i class="fa fa-minus"></i>
+                  </button>
+
+                  <span class="mx-2 fw-bold">{{ item.quantity }}</span>
+
+                  <button class="btn btn-sm btn-outline-secondary" (click)="incrementQuantity(item)">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </td>
+
+              <td class="fw-bold text-success">{{ (item.price * item.quantity) | currency }}</td>
+
+              <td>
+                <button class="btn btn-sm btn-outline-danger" (click)="removeItem(item)" title="Remove item">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="rorder-summary-containe">
+      <app-order-total></app-order-total>
+      <a routerLink="/checkout" class="btn btn-primary w-100 mt-3 py-2 fw-bold shadow-sm">
+        <i class="fa fa-lock me-1"></i> Proceed to Checkout
+      </a>
+    </div>
+  </div>
+}

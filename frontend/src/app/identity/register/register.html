@@ -1,0 +1,80 @@
+<section class="pt-5">
+  <div class="form-container">
+    <h2 class="text-center">Register</h2>
+    <form *ngIf="fromGroup" [formGroup]="fromGroup" (ngSubmit)="Submit()">
+
+
+      <div class="form-group">
+        <label for="username">UserName</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="UserName"
+          [class.is-valid]="_username?.valid"
+          [class.is-invalid]="_username?.invalid && _username?.touched"
+        />
+        @if (_username?.invalid == true) {
+          <span class="text-danger">Username is required</span>
+        }
+      </div>
+
+
+      <div class="form-group">
+        <label for="DispalyName">DispalyName</label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="DisplayName"
+          [class.is-valid]="_DisplayName?.valid"
+          [class.is-invalid]="_DisplayName?.invalid && _DisplayName?.touched"
+        />
+
+        @if (_DisplayName?.hasError('required')) {
+          <span class="text-danger">DisplayName is required</span>
+        }
+      </div>
+
+
+      <div class="form-group">
+        <label for="email">email</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          [class.is-valid]="_email?.valid"
+          [class.is-invalid]="_email?.invalid && _email?.touched"
+        />
+        @if (_email?.hasError('required')) {
+          <span class="text-danger">email is required</span>
+        } @else if (_email?.hasError('email')) {
+          <span class="text-danger"> email format invalid Example:test&#64;ts.ts </span>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">password</label>
+        <input
+          type="password"
+          class="form-control"
+          formControlName="password"
+          [class.is-valid]="_Password?.valid"
+          [class.is-invalid]="_Password?.invalid && _Password?.touched"
+        />
+
+        @if (_Password?.hasError('required')) {
+          <span class="text-danger">password is required</span>
+        } @else if (_Password?.hasError('pattern')) {
+          <span class="text-danger">
+            Password must contain at least one number, one special character (#$&#64;!.), and be at
+            least 8 characters long.
+          </span>
+        }
+      </div>
+
+      <div class="form-group mt-4">
+        <button class="btn btn-info w-100 py-2 text-white fw-bold" [disabled]="fromGroup.invalid">Register</button>
+      </div>
+    </form>
+  </div>
+</section>

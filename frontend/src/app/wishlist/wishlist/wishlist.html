@@ -1,0 +1,58 @@
+<div class="container my-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1"><i class="fa fa-heart text-danger me-2"></i> My Wishlist</h3>
+      <p class="text-muted mb-0">Items you've saved for later</p>
+    </div>
+    <a routerLink="/shop" class="btn btn-outline-primary">Browse More</a>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p class="mt-2 text-muted">Loading wishlist...</p>
+  </div>
+
+  <div *ngIf="!loading && wishlistItems.length === 0" class="text-center py-5 bg-light rounded border">
+    <i class="fa fa-heart-o fa-3x text-muted mb-3"></i>
+    <h5 class="fw-bold">Your wishlist is empty</h5>
+    <p class="text-muted">Explore our shop and save products you love.</p>
+    <a routerLink="/shop" class="btn btn-primary mt-2">Start Exploring</a>
+  </div>
+
+  <div class="row g-4" *ngIf="!loading && wishlistItems.length > 0">
+    <div class="col-lg-3 col-md-6" *ngFor="let item of wishlistItems; trackBy: trackById">
+      <div class="card h-100 border-0 shadow-sm position-relative">
+        <button class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-circle text-danger shadow-sm"
+                (click)="removeItem(item.product?.id)"
+                title="Remove from wishlist">
+          <i class="fa fa-times"></i>
+        </button>
+
+        <div class="p-3 bg-light text-center rounded-top">
+          <a [routerLink]="['/shop', item.product?.id]">
+            <img [src]="getImageUrl(item.product?.photos)"
+                 (error)="$any($event.target).src = './favicon.ico'"
+                 alt="{{ item.product?.name }}"
+                 class="img-fluid"
+                 style="height: 160px; object-fit: contain;" />
+          </a>
+        </div>
+
+        <div class="card-body d-flex flex-column">
+          <span class="badge bg-secondary align-self-start mb-2">{{ item.product?.categoryName }}</span>
+          <h6 class="card-title fw-bold text-truncate" title="{{ item.product?.name }}">
+            <a [routerLink]="['/shop', item.product?.id]" class="text-decoration-none text-dark">{{ item.product?.name }}</a>
+          </h6>
+
+          <div class="mb-3">
+            <span class="fs-5 fw-bold text-primary">{{ item.product?.newPrice | currency }}</span>
+          </div>
+
+          <button class="btn btn-primary w-100 mt-auto" (click)="moveToCart(item.product)">
+            <i class="fa fa-cart-plus me-1"></i> Move to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

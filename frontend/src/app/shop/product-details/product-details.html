@@ -1,0 +1,168 @@
+@if (product) {
+  <div class="container my-5">
+    <div class="row">
+      <!-- معرض الصور والمكبر -->
+      <div class="col-md-5">
+        <div class="main-img">
+          <lib-ngx-image-zoom
+            [thumbImage]="getImageUrl(MainImage)"
+            [fullImage]="getImageUrl(MainImage)"
+            [magnification]="1.3"
+            [enableScrollZoom]="true"
+            [lensWidth]="200"
+            [lensHeight]="200"
+            [enableLens]="true"
+          ></lib-ngx-image-zoom>
+
+          <div class="row my-3 previews">
+            @for (item of product.photos; track $index) {
+              <div class="col-md-3">
+                <img
+                  (click)="ReplaceImage(item.imageName)"
+                  class="w-100 cursor-pointer"
+                  [src]="getImageUrl(item.imageName)"
+                  alt="Product Image"
+                />
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-7">
+        <div class="main-description px-2">
+          <div class="category text-bold">Category: {{ product.categoryName }}</div>
+          <div class="product-title text-bold my-3">{{ product.name }}</div>
+
+          <div class="price-area my-4">
+            @if (product.oldPrice) {
+              <p class="old-price mb-1">
+                <del>{{ product.oldPrice | currency }}</del>
+                <span class="old-price-discount text-danger ms-2">({{CalucateDiscount(product.oldPrice,product.newPrice)}}% off)</span>
+              </p>
+            }
+            <p class="new-price text-bold mb-1">{{ product.newPrice | currency }}</p>
+
+
+            <p class="text-danger fw-bold">quantity : {{ qunatity }}</p>
+
+
+            <div class="d-flex align-items-center gap-2 mt-2">
+              <button (click)="DecrementBasket()" class="btn btn-danger text-white">
+                <i class="fa fa-minus"></i>
+              </button>
+
+              <button (click)="incrementBasket()" class="btn btn-dark text-white">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+
+          <div class="buttons d-flex align-items-center gap-2 my-5">
+            <div class="block">
+              <a href="#" class="shadow btn custom-btn">Wishlist</a>
+            </div>
+            <div class="block">
+
+              <button (click)="AddToBasket()" class="shadow btn custom-btn">Add to cart</button>
+            </div>
+            <div class="block">
+              <button routerLink="/shop" class="shadow btn custom-btn">Shopping</button>
+            </div>
+
+            <div class="block quantity">
+              <input
+                type="number"
+                class="form-control text-center"
+                id="cart_quantity"
+                [value]="qunatity"
+                readonly
+                min="1"
+                max="10"
+                name="cart_quantity"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="product-details my-4">
+          <p class="details-title text-color mb-1 fw-bold">Product Details</p>
+          <p class="description">
+            {{ product.description }}
+          </p>
+        </div>
+
+        <div class="row questions bg-light p-3 rounded">
+          <div class="col-md-1 icon">
+            <i class="fa-brands fa-rocketchat questions-icon fs-3 text-primary"></i>
+          </div>
+          <div class="col-md-11 text">
+            Have a question about our products at E-Store? Feel free to contact our representatives
+            via live chat or email.
+          </div>
+        </div>
+
+        <div class="delivery my-4">
+          <p class="font-weight-bold mb-0">
+            <span><i class="fa-solid fa-truck text-primary"></i></span>
+            <b> Delivery done in 3 days from date of purchase</b>
+          </p>
+          <p class="text-secondary">Order now to get this product delivery</p>
+        </div>
+        <div class="delivery-options my-4">
+          <p class="font-weight-bold mb-0">
+            <span><i class="fa-solid fa-filter text-primary"></i></span> <b> Delivery options</b>
+          </p>
+          <p class="text-secondary">View delivery options here</p>
+        </div>
+      </div>
+    </div>
+  </div>
+} @else {
+
+  <div class="container my-5 text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading product details...</span>
+    </div>
+    <p class="mt-2 text-muted">Loading product details...</p>
+  </div>
+}
+
+
+<div class="container similar-products my-4">
+  <hr />
+  <p class="display-6 fw-bold my-4">Similar Products</p>
+
+  <div class="row g-3">
+    <div class="col-md-3">
+      <div class="similar-product border p-2 rounded text-center">
+        <img class="w-100 rounded mb-2" src="https://source.unsplash.com/gsKdPcIyeGg" alt="Preview" />
+        <p class="title mb-1 fw-bold">Lovely black dress</p>
+        <p class="price text-primary mb-0">$100</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="similar-product border p-2 rounded text-center">
+        <img class="w-100 rounded mb-2" src="https://source.unsplash.com/sg_gRhbYXhc" alt="Preview" />
+        <p class="title mb-1 fw-bold">Lovely Dress with patterns</p>
+        <p class="price text-primary mb-0">$85</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="similar-product border p-2 rounded text-center">
+        <img class="w-100 rounded mb-2" src="https://source.unsplash.com/gJZQcirK8aw" alt="Preview" />
+        <p class="title mb-1 fw-bold">Lovely fashion dress</p>
+        <p class="price text-primary mb-0">$200</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="similar-product border p-2 rounded text-center">
+        <img class="w-100 rounded mb-2" src="https://source.unsplash.com/qbB_Z2pXLEU" alt="Preview" />
+        <p class="title mb-1 fw-bold">Lovely red dress</p>
+        <p class="price text-primary mb-0">$120</p>
+      </div>
+    </div>
+  </div>
+</div>

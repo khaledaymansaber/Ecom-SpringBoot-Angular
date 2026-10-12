@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+  <div class="container">
+    <a routerLink="/" class="navbar-brand d-flex align-items-center">
+      <img src="./favicon.ico" alt="Logo" class="logo me-2" style="width: 32px; height: 32px;" />
+      <span class="fw-bold fs-5 text-white">E-Commerce</span>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a routerLink="/" routerLinkActive="active" class="nav-link" [routerLinkActiveOptions]="{exact:true}">Home</a></li>
+        <li class="nav-item"><a routerLink="/shop" routerLinkActive="active" class="nav-link">Shop</a></li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto align-items-center flex-row gap-3">
+        <!-- Wishlist Icon -->
+        <li class="nav-item" *ngIf="currentUser">
+          <a routerLink="/wishlist" class="nav-link position-relative text-white p-2" title="Wishlist">
+            <i class="fa fa-heart fa-lg"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" *ngIf="wishlistCount > 0">
+              {{ wishlistCount }}
+            </span>
+          </a>
+        </li>
+
+        <!-- Basket Icon -->
+        <li class="nav-item">
+          <a routerLink="/basket" class="nav-link position-relative text-white p-2" title="Cart">
+            <i class="fa fa-shopping-cart fa-lg"></i>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" *ngIf="count > 0">
+              {{ count }}
+            </span>
+          </a>
+        </li>
+
+        <!-- User Account Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white d-flex align-items-center"
+             role="button"
+             (click)="toggleDropdown()"
+             style="cursor: pointer;">
+            <i class="fa fa-user-circle fa-lg me-1"></i>
+            <span *ngIf="currentUser" class="small d-none d-md-inline ms-1">{{ currentUser.email }}</span>
+          </a>
+          <ul [ngClass]="{'show': isDropdownOpen}" class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+            <!-- Guest Links -->
+            <ng-container *ngIf="!currentUser">
+              <li><a routerLink="/Account/Login" (click)="closeDropdown()" class="dropdown-item"><i class="fa fa-sign-in text-primary me-2"></i> Login</a></li>
+              <li><a routerLink="/Account/Register" (click)="closeDropdown()" class="dropdown-item"><i class="fa fa-user-plus text-success me-2"></i> Register</a></li>
+            </ng-container>
+
+            <!-- Authenticated Links -->
+            <ng-container *ngIf="currentUser">
+              <li><a routerLink="/profile" (click)="closeDropdown()" class="dropdown-item"><i class="fa fa-user text-info me-2"></i> My Profile</a></li>
+              <li><a routerLink="/orders" (click)="closeDropdown()" class="dropdown-item"><i class="fa fa-list text-primary me-2"></i> My Orders</a></li>
+              <li><a routerLink="/wishlist" (click)="closeDropdown()" class="dropdown-item"><i class="fa fa-heart text-danger me-2"></i> My Wishlist</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button (click)="logout()" class="dropdown-item text-danger"><i class="fa fa-sign-out me-2"></i> Logout</button></li>
+            </ng-container>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
