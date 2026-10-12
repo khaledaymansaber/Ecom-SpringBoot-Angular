@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { IProduct } from '../../shared/Models/Product';
 import { BasketService } from '../../basket/basket';
 import { WishlistService } from '../../core/Services/wishlist.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-shop-item',
@@ -36,7 +37,7 @@ export class ShopItem {
   getImageUrl(imageName: string): string {
     if (!imageName) return './favicon.ico';
     if (imageName.startsWith('http')) return imageName;
-    if (imageName.startsWith('/')) return 'http://localhost:8080' + imageName;
-    return 'http://localhost:8080/images/' + encodeURI(imageName);
+    const cleanPath = imageName.startsWith('/') ? imageName.substring(1) : imageName;
+    return environment.imageBaseURL + encodeURI(cleanPath);
   }
 }

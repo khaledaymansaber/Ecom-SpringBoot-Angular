@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: 'http://localhost:8080/api/',
-  imageBaseURL: 'http://localhost:8080/images/'
+  baseURL: 'https://shore-sublime-now-calibration.trycloudflare.com/api/',
+  imageBaseURL: 'https://shore-sublime-now-calibration.trycloudflare.com/images/'
 };

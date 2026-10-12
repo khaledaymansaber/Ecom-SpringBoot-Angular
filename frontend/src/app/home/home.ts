@@ -6,6 +6,7 @@ import { ICategory } from '../shared/Models/Category';
 import { IProduct } from '../shared/Models/Product';
 import { ProductParams } from '../shared/Models/ProductParams';
 import { ShopService } from '../shop/shop';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -70,7 +71,7 @@ export class Home implements OnInit {
     }
     const name = photos[0].imageName;
     if (name.startsWith('http')) return name;
-    return `http://localhost:8080/images/${encodeURI(name)}`;
+    return `${environment.imageBaseURL}${encodeURI(name)}`;
   }
 
   addToCart(product: IProduct): void {

@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrderService } from '../../core/Services/order.service';
 import { IOrder } from '../../shared/Models/Order';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-order-details',
@@ -56,7 +57,7 @@ export class OrderDetails implements OnInit {
       return trimmed;
     }
     const cleanPath = trimmed.startsWith('/') ? trimmed.substring(1) : trimmed;
-    return 'http://localhost:8080/images/' + encodeURI(cleanPath);
+    return environment.imageBaseURL + encodeURI(cleanPath);
   }
 
   trackById(index: number, item: any): any {

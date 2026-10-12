@@ -4,6 +4,7 @@ import { IProduct } from '../../shared/Models/Product';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BasketService } from '../../basket/basket';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -53,10 +54,8 @@ export class ProductDetails implements OnInit {
     if (imageName.startsWith('http')) {
       return imageName;
     }
-    if (imageName.startsWith('/')) {
-      return `http://localhost:8080${imageName}`;
-    }
-    return `http://localhost:8080/images/${encodeURI(imageName)}`;
+    const cleanPath = imageName.startsWith('/') ? imageName.substring(1) : imageName;
+    return `${environment.imageBaseURL}${encodeURI(cleanPath)}`;
   }
 
   incrementBasket() {

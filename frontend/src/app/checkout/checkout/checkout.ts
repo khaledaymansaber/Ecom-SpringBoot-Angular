@@ -7,6 +7,7 @@ import { OrderService } from '../../core/Services/order.service';
 import { ProfileService } from '../../core/Services/profile.service';
 import { IBasket } from '../../shared/Models/Basket';
 import { IDeliveryMethod, IOrderToCreate } from '../../shared/Models/Order';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -121,7 +122,7 @@ export class Checkout implements OnInit {
       return trimmed;
     }
     const cleanPath = trimmed.startsWith('/') ? trimmed.substring(1) : trimmed;
-    return 'http://localhost:8080/images/' + encodeURI(cleanPath);
+    return environment.imageBaseURL + encodeURI(cleanPath);
   }
 
   trackById(index: number, item: any): any {

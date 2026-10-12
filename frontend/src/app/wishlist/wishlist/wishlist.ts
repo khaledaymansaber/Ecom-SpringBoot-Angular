@@ -4,6 +4,7 @@ import { BasketService } from '../../basket/basket';
 import { WishlistService } from '../../core/Services/wishlist.service';
 import { IWishlistItem } from '../../shared/Models/Wishlist';
 import { IProduct } from '../../shared/Models/Product';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-wishlist',
@@ -69,7 +70,7 @@ export class Wishlist implements OnInit {
     }
     const name = photos[0].imageName;
     if (name.startsWith('http')) return name;
-    return `http://localhost:8080/images/${encodeURI(name)}`;
+    return `${environment.imageBaseURL}${encodeURI(name)}`;
   }
 
   trackById(index: number, item: any): any {
