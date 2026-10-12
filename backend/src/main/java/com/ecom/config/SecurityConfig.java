@@ -94,6 +94,7 @@ public class SecurityConfig {
                 "http://localhost:*",
                 "http://127.0.0.1:*",
                 "https://*.vercel.app",
+                "https://*.hf.space",
                 "https://*.onrender.com",
                 "https://*.netlify.app",
                 frontendUrl

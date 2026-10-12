@@ -7,10 +7,13 @@ RUN mvn clean package -DskipTests
 
 # Stage 2: Lightweight runtime image
 FROM eclipse-temurin:21-jre-alpine
+RUN adduser -D -u 1000 appuser
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-COPY uploads ./uploads
+COPY --from=build --chown=appuser:appuser /app/target/*.jar app.jar
+COPY --chown=appuser:appuser uploads ./uploads
 
-EXPOSE 8080
-ENV PORT=8080
+USER appuser
+
+EXPOSE 7860
+ENV PORT=7860
 ENTRYPOINT ["java", "-jar", "app.jar"]
