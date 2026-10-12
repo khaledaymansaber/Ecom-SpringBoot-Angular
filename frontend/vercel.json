@@ -1,6 +1,7 @@
 {
   "version": 2,
-  "outputDirectory": "dist/Client",
+  "outputDirectory": "dist/Client/browser",
+  "cleanUrls": false,
   "rewrites": [
     {
       "source": "/(.*)",
